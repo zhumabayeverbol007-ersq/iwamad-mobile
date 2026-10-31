@@ -19,7 +19,6 @@ export default function EventDetailsScreen() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: event.title }} />
-      <Text style={styles.title}>{event.title}</Text>
       <Text style={styles.text}>{event.date}</Text>
       <Text style={styles.text}>{event.place}</Text>
       <Text style={styles.text}>{event.seats} seats left</Text>
