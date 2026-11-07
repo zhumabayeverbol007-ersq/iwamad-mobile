@@ -41,6 +41,7 @@ export default function EventDetailsScreen() {
 
   return (
     <View style={styles.container}>
+      {/* Осы жерде header тақырыбы event.title болып өзгереді */}
       <Stack.Screen options={{ title: event.title }} />
       <Text>{event.date}</Text>
       <Text>{event.place}</Text>
