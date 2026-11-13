@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ActivityIndicator, Pressable } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { useEvents } from '../../src/hooks/useEvents';
+import HolidayNote from '../../src/components/HolidayNote';
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -41,9 +42,9 @@ export default function EventDetailsScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Осы жерде header тақырыбы event.title болып өзгереді */}
       <Stack.Screen options={{ title: event.title }} />
       <Text>{event.date}</Text>
+      <HolidayNote date={event.date} />
       <Text>{event.place}</Text>
       <Text>{event.seats} seats left</Text>
     </View>
