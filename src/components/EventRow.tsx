@@ -1,6 +1,6 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
-import Animated, { FadeIn, LinearTransition, ZoomIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, LinearTransition, ZoomIn } from 'react-native-reanimated';
 import type { CampusEvent } from '../data/events';
 
 type EventRowProps = {
@@ -12,7 +12,7 @@ type EventRowProps = {
 
 export default function EventRow({ event, onPress, onToggleSaved, saved }: EventRowProps) {
   return (
-    <Animated.View entering={FadeIn} layout={LinearTransition}>
+    <Animated.View entering={FadeIn} exiting={FadeOut} layout={LinearTransition}>
       <Swipeable
         friction={2}
         rightThreshold={60}
