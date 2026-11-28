@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
+import { initializeAuth } from 'firebase/auth';
+import { persistence } from './authPersistence';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCJheIRWs_3cmd6e4p0C4o6BUTTzzydce0",
@@ -13,3 +15,4 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const db = getDatabase(app);
+export const auth = initializeAuth(app, { persistence });

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import { router } from 'expo-router';
 import { useChat } from '../hooks/useChat';
 import { sendMessage } from '../lib/chat';
 import { askNotificationPermission } from '../lib/notifications';
+import { useAuth } from '../context/AuthContext';
 
 type ChatPanelProps = {
   eventId: number;
@@ -10,6 +12,7 @@ type ChatPanelProps = {
 };
 
 export default function ChatPanel({ eventId, eventTitle }: ChatPanelProps) {
+  const { user } = useAuth();
   const [messages, status] = useChat(eventId, eventTitle);
   const [text, setText] = useState('');
 
@@ -28,21 +31,28 @@ export default function ChatPanel({ eventId, eventTitle }: ChatPanelProps) {
     <View style={styles.container}>
       <Text style={styles.heading}>Live chat</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Write a message"
-        maxLength={200}
-        value={text}
-        onChangeText={setText}
-      />
-
-      <Pressable
-        onPress={handleSend}
-        disabled={!text.trim()}
-        style={[styles.button, !text.trim() && styles.buttonDisabled]}
-      >
-        <Text style={styles.buttonText}>Send</Text>
-      </Pressable>
+      {user ? (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Write a message"
+            maxLength={200}
+            value={text}
+            onChangeText={setText}
+          />
+          <Pressable
+            onPress={handleSend}
+            disabled={!text.trim()}
+            style={[styles.button, !text.trim() && styles.buttonDisabled]}
+          >
+            <Text style={styles.buttonText}>Send</Text>
+          </Pressable>
+        </>
+      ) : (
+        <Pressable onPress={() => router.push('/login')} style={styles.button}>
+          <Text style={styles.buttonText}>Sign in to chat</Text>
+        </Pressable>
+      )}
 
       {status === 'connecting' && <Text>Connecting</Text>}
       {status === 'error' && <Text>Chat unavailable</Text>}
